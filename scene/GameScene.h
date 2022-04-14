@@ -49,6 +49,11 @@ class GameScene {
 	DebugText* debugText_ = nullptr;
 
 	/// <summary>
+	//サウンドデータハンドル
+	uint32_t soundDateHandle_ = 0;
+
+	//音声再生ハンドル
+	uint32_t voiceHandle_ = 0;
 	/// ゲームシーン用
 	/// </summary>
 };
