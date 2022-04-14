@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 	//// X、Y、Z軸周りの回転角を設定(単位はラジアン)
 	//worldTransform_.rotation_ = {0.0f,XMConvertToRadians(45.0f), 0.0f};
 	//X、Y、Z軸周りの平行移動を設定
-	worldTransform_.translation_ = {0.0f,10.0f,0.0f};
+	worldTransform_.translation_ = {10.0f,10.0f,10.0f};
 
 	//☝の３つは同時に機能する
 
@@ -40,7 +40,30 @@ void GameScene::Initialize() {
 	
 }
 
-void GameScene::Update() {}
+void GameScene::Update() 
+{ 
+
+	std::string strDebugTra = std::string("transtion:(") + 
+	std::to_string(translationX) + std::string(",") + 
+	std::to_string(translationY) + std::string(",") + 
+	std::to_string(translationZ) + std::string(")");
+	debugText_->Print(strDebugTra, 50, 50, 1.0f);
+
+	std::string strDebugRota = std::string("rotation:(") + 
+	std::to_string(rotationX) + std::string(",") + 
+	std::to_string(rotationY) + std::string(",") + 
+	std::to_string(rotationZ) + std::string(")");
+	debugText_->Print(strDebugRota, 50, 70, 1.0f);
+
+	std::string strDebugScale = std::string("scale:(") + 
+	std::to_string(scaleX) + std::string(",") + 
+	std::to_string(scaleY) + std::string(",") + 
+	std::to_string(scaleZ) + std::string(")");
+	debugText_->Print(strDebugScale, 50, 90, 1.0f);
+	
+	
+	
+}
 
 void GameScene::Draw() {
 
