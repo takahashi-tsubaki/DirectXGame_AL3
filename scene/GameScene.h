@@ -59,6 +59,9 @@ class GameScene {
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 
+	//カメラの上方向の角度
+	float viewAngle = 0.0f;
+
 	////値を表示したい変数
 	//float translationX = 10.0f;
 	//float translationY = 10.0f;
