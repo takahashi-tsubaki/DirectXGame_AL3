@@ -18,39 +18,39 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
-
+	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
-
-	sprite_ = Sprite::Create(textureHandle_, {100, 50});
-
+	//３Dモデルの生成
 	model_ = Model::Create();
-	
-	worldTransform_.Initialize();
+	// X、Y、Z方向のスケーリングを設定
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+	// X、Y、Z軸周りの回転角を設定(単位はラジアン)
+	worldTransform_.rotation_ = {XMConvertToRadians(45.0f), XM_PI / 4.0f, 0.0f}; // XM_PIは180度
+	//// X、Y、Z軸周りの回転角を設定(単位はラジアン)
+	// worldTransform_.rotation_ = {0.0f,XMConvertToRadians(45.0f), 0.0f};
+	// X、Y、Z軸周りの平行移動を設定
+	worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
+	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
 
-	viewProjection_.Initialize();
-
-	soundDateHandle_ = audio_->LoadWave("se_sad03.wav");
-
-	voiceHandle_ = audio_->PlayWave(soundDateHandle_,true);
+	//☝の３つは同時に機能する
 }
 
 void GameScene::Update() 
-{ 
-	XMFLOAT2 position = sprite_->GetPosition();
-	position.x += 2.0f;
-	position.y += 1.0f;
-	//反映
-	sprite_->SetPosition(position);
-	if (input_->TriggerKey(DIK_SPACE)) 
-	{
-		//音声の停止
-		audio_->StopWave(voiceHandle_);
-	}
-	value_++;
-	//値を含んだ文字列
-	std::string strDebug = std::string("value:") + std::to_string(value_);
-	//デバックテキストの表示
-	debugText_->Print(strDebug, 50, 50, 1.0f);
+{
+	std::string strDebugTra = std::string("transtion:(") + std::to_string(translationX) +
+	                          std::string(",") + std::to_string(translationY) + std::string(",") +
+	                          std::to_string(translationZ) + std::string(")");
+	debugText_->Print(strDebugTra, 50, 50, 1.0f);
+
+	std::string strDebugRota = std::string("rotation:(") + std::to_string(rotationX) +
+	                           std::string(",") + std::to_string(rotationY) + std::string(",") +
+	                           std::to_string(rotationZ) + std::string(")");
+	debugText_->Print(strDebugRota, 50, 70, 1.0f);
+
+	std::string strDebugScale = std::string("scale:(") + std::to_string(scaleX) + std::string(",") +
+	                            std::to_string(scaleY) + std::string(",") + std::to_string(scaleZ) +
+	                            std::string(")");
+	debugText_->Print(strDebugScale, 50, 90, 1.0f);
 }
 
 void GameScene::Draw() {
@@ -79,8 +79,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	//3Dモデル描画
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

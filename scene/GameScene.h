@@ -58,9 +58,18 @@ class GameScene {
 	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
 
-	uint32_t soundDateHandle_ = 0;
-	uint32_t voiceHandle_ = 0;
-	int32_t value_ = 0;
+	////値を表示したい変数
+	float translationX = 10.0f;
+	float translationY = 10.0f;
+	float translationZ = 10.0f;
+
+	float rotationX = 0.785398f;
+	float rotationY = 0.785398f;
+	float rotationZ = 0.0f;
+
+	float scaleX = 5.0f;
+	float scaleY = 5.0f;
+	float scaleZ = 5.0f;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
