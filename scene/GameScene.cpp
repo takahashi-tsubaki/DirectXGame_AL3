@@ -6,11 +6,7 @@ using namespace DirectX;
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() 
-{ 
-	delete sprite_;
-	delete model_;
-}
+GameScene::~GameScene() { delete model_; }
 
 void GameScene::Initialize() {
 
@@ -22,6 +18,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	//３Dモデルの生成
 	model_ = Model::Create();
+
 	// X、Y、Z方向のスケーリングを設定
 	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
 	// X、Y、Z軸周りの回転角を設定(単位はラジアン)
@@ -29,14 +26,18 @@ void GameScene::Initialize() {
 	//// X、Y、Z軸周りの回転角を設定(単位はラジアン)
 	// worldTransform_.rotation_ = {0.0f,XMConvertToRadians(45.0f), 0.0f};
 	// X、Y、Z軸周りの平行移動を設定
-	worldTransform_.translation_ = {0.0f, 10.0f, 0.0f};
 	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
 
 	//☝の３つは同時に機能する
+
+	//ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+	//ビュープロジェクションの初期化
+	viewProjection_.Initialize();
 }
 
-void GameScene::Update() 
-{
+void GameScene::Update() {
+
 	std::string strDebugTra = std::string("transtion:(") + std::to_string(translationX) +
 	                          std::string(",") + std::to_string(translationY) + std::string(",") +
 	                          std::to_string(translationZ) + std::string(")");
@@ -79,8 +80,9 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
+	// 3Dモデル描画
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -93,7 +95,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-	sprite_->Draw();
+
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
 	//
