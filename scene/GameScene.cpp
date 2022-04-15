@@ -27,7 +27,7 @@ void GameScene::Initialize() {
 	//乱数範囲(回転角用)
 	std::uniform_real_distribution<float> rotDist(0.0f, XM_2PI);
 	//乱数範囲(座標用)
-	std::uniform_real_distribution<float> posDist(-10.0f, 10.0f);
+	std::uniform_real_distribution<float> posDist(-50.0f, 50.0f);
 
 	for (size_t i = 0;i< _countof(worldTransform_);i++) 
 	{
@@ -48,7 +48,7 @@ void GameScene::Initialize() {
 		worldTransform_[i].Initialize();
 	}
 	//カメラ視点座標を設定
-	viewProjection_.eye = {0,0,-10}; //初期値は{0,0,-50}
+	viewProjection_.eye = {0,0,-250}; //初期値は{0,0,-50}
 
 	//カメラ注視点座標を設定
 	viewProjection_.target = {10, 0, 0};
