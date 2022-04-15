@@ -47,7 +47,7 @@ void GameScene::Initialize() {
 		worldTransform_[i].Initialize();
 	}
 	//カメラ視点座標を設定
-	viewProjection_.eye = {0, 0, -250}; //初期値は{0,0,-50}
+	viewProjection_.eye = {0, 0, -50}; //初期値は{0,0,-50}
 
 	//カメラ注視点座標を設定
 	viewProjection_.target = {10, 0, 0};
