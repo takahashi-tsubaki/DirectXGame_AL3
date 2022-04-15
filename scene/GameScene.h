@@ -55,22 +55,12 @@ class GameScene {
 	Model* model_ = nullptr;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_;
+	WorldTransform worldTransform_[100];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	////値を表示したい変数
-	float translationX = 10.0f;
-	float translationY = 10.0f;
-	float translationZ = 10.0f;
-
-	float rotationX = 0.785398f;
-	float rotationY = 0.785398f;
-	float rotationZ = 0.0f;
-
-	float scaleX = 5.0f;
-	float scaleY = 5.0f;
-	float scaleZ = 5.0f;
+	//カメラの上方向の角度
+	float viewAngle = 0.0f;
 
 	/// <summary>
 	/// ゲームシーン用
