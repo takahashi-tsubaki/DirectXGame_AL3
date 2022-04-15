@@ -52,33 +52,17 @@ void GameScene::Initialize() {
 
 	//カメラ注視点座標を設定
 	viewProjection_.target = {10, 0, 0};
-	
+
 	//カメラの上方向ベクトルを設定(右上45度指定)
 	viewProjection_.up = {cosf(XM_PI / 4.0f), sinf(XM_PI / 4.0f), 0.0f};
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
-	
-
 }
 
-void GameScene::Update() {
-
-	/*std::string strDebugTra = std::string("transtion:(") + std::to_string(translationX) +
-	                          std::string(",") + std::to_string(translationY) + std::string(",") +
-	                          std::to_string(translationZ) + std::string(")");
-	debugText_->Print(strDebugTra, 50, 50, 1.0f);
-
-	std::string strDebugRota = std::string("rotation:(") + std::to_string(rotationX) +
-	                           std::string(",") + std::to_string(rotationY) + std::string(",") +
-	                           std::to_string(rotationZ) + std::string(")");
-	debugText_->Print(strDebugRota, 50, 70, 1.0f);
-
-	std::string strDebugScale = std::string("scale:(") + std::to_string(scaleX) + std::string(",") +
-	                            std::to_string(scaleY) + std::string(",") + std::to_string(scaleZ) +
-	                            std::string(")");
-	debugText_->Print(strDebugScale, 50, 90, 1.0f);*/
+void GameScene::Update() 
+{
 
 	//視点移動処理
 	//視点の移動ベクトル
@@ -105,7 +89,7 @@ void GameScene::Update() {
 		//デバック用表示
 		debugText_->SetPos(50, 50);
 		debugText_->Printf("eye:(%f,%f,%f,)", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
-
+    
 		XMFLOAT3 move2 = {0, 0, 0};
 
 		//注視点の移動速度
@@ -113,11 +97,11 @@ void GameScene::Update() {
 
 		//押した方向で移動ベクトルを変更
 		if (input_->PushKey(DIK_LEFT)) 
-		{
-			move2 = {-kTargetSpeed,0,0};
+    {
+			move2 = {-kTargetSpeed, 0, 0};
 		} 
-		else if (input_->PushKey(DIK_RIGHT)) 
-		{
+    else if (input_->PushKey(DIK_RIGHT))
+    {
 			move2 = {kTargetSpeed, 0, 0};
 		}
 
@@ -135,7 +119,6 @@ void GameScene::Update() {
 		  viewProjection_.target.z);
 
 		//上方向回転処理
-		
 		//上方向の回転速度[ラジアン/frame]
 		const float kUpRotSpeed = 0.05f;
 
@@ -146,7 +129,7 @@ void GameScene::Update() {
 			//2πを超えたら元の戻す
 			viewAngle = fmodf(viewAngle,XM_2PI);
 		} 
-		
+	
 		//上方向ベクトルを計算(半径1の円周上の計算)
 		viewProjection_.up = {cosf(viewAngle), sinf(viewAngle), 0.0f};
 
@@ -158,8 +141,6 @@ void GameScene::Update() {
 		debugText_->Printf(
 		  "up:(%f,%f,%f,)", viewProjection_.up.x, viewProjection_.up.y,
 		  viewProjection_.up.z);
-
-
 	}
 	
 }
@@ -194,9 +175,9 @@ void GameScene::Draw() {
 	// 3Dモデル描画
 	/*model_->Draw(worldTransform_, viewProjection_, textureHandle_);*/
 
-	for (size_t i = 0; i < _countof(worldTransform_); i++) 
-	{
-		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	for (size_t i = 0; i < _countof(worldTransform_); i++)
+  {
+    model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
 	}
 
 	// 3Dオブジェクト描画後処理
