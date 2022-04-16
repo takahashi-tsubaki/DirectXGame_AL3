@@ -16,7 +16,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	//ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("mario.jpg");
+	textureHandle_ = TextureManager::Load("mario(2).jpg");
 	//３Dモデルの生成
 	model_ = Model::Create();
 
@@ -47,14 +47,18 @@ void GameScene::Initialize() {
 		//ワールドトランスフォームの初期化
 		worldTransform_[i].Initialize();
 	}
-	//カメラ視点座標を設定
-	viewProjection_.eye = {0,0,-250}; //初期値は{0,0,-50}
 
-	//カメラ注視点座標を設定
-	viewProjection_.target = {10, 0, 0};
+	//カメラ垂直方向視野角を設定
+	viewProjection_.fovAngleY = XMConvertToRadians(45.0f);
 
-	//カメラの上方向ベクトルを設定(右上45度指定)
-	viewProjection_.up = {cosf(XM_PI / 4.0f), sinf(XM_PI / 4.0f), 0.0f};
+	//アスペクト比を設定
+	viewProjection_.aspectRatio = 1.0f;
+
+	//ニアクリップ距離を設定
+	viewProjection_.nearZ = 52.0f;
+
+	//ファークリップ距離を設定
+	viewProjection_.farZ = 53.0f;
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -78,18 +82,19 @@ void GameScene::Update()
 		} else if (input_->PushKey(DIK_S)) {
 			move = {0, 0, -kEyeSpeed};
 		}
-		//視点移動(ベクトルの加算)
-		viewProjection_.eye.x += move.x;
-		viewProjection_.eye.y += move.y;
-		viewProjection_.eye.z += move.z;
+		////視点移動(ベクトルの加算)
+		//viewProjection_.eye.x += move.x;
+		//viewProjection_.eye.y += move.y;
+		//viewProjection_.eye.z += move.z;
 
-		//行列の再計算
-		viewProjection_.UpdateMatrix();
+		////行列の再計算
+		//viewProjection_.UpdateMatrix();
 
 		//デバック用表示
 		debugText_->SetPos(50, 50);
-		debugText_->Printf("eye:(%f,%f,%f,)", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
-    
+		debugText_->Printf("eye:(%f,%f,%f,)", 
+		 viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
+
 		XMFLOAT3 move2 = {0, 0, 0};
 
 		//注視点の移動速度
@@ -105,13 +110,13 @@ void GameScene::Update()
 			move2 = {kTargetSpeed, 0, 0};
 		}
 
-		//注視点移動(ベクトルの加算)
-		viewProjection_.target.x += move2.x;
-		viewProjection_.target.y += move2.y;
-		viewProjection_.target.z += move2.z;
+		////注視点移動(ベクトルの加算)
+		//viewProjection_.target.x += move2.x;
+		//viewProjection_.target.y += move2.y;
+		//viewProjection_.target.z += move2.z;
 
-		//行列の再計算
-		viewProjection_.UpdateMatrix();
+		////行列の再計算
+		//viewProjection_.UpdateMatrix();
 		//デバック用表示
 		debugText_->SetPos(50, 70);
 		debugText_->Printf(
@@ -130,17 +135,54 @@ void GameScene::Update()
 			viewAngle = fmodf(viewAngle,XM_2PI);
 		} 
 	
-		//上方向ベクトルを計算(半径1の円周上の計算)
-		viewProjection_.up = {cosf(viewAngle), sinf(viewAngle), 0.0f};
+		////上方向ベクトルを計算(半径1の円周上の計算)
+		//viewProjection_.up = {cosf(viewAngle), sinf(viewAngle), 0.0f};
 
-		//行列の再計算
-		viewProjection_.UpdateMatrix();
+		////行列の再計算
+		//viewProjection_.UpdateMatrix();
 
 		//デバック用表示
 		debugText_->SetPos(50, 90);
 		debugText_->Printf(
 		  "up:(%f,%f,%f,)", viewProjection_.up.x, viewProjection_.up.y,
 		  viewProjection_.up.z);
+
+		//FoV変更処理
+		//上キーで視野角が広がる
+		if (input_->PushKey(DIK_W)) {
+			viewProjection_.fovAngleY += 0.01f;
+			viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
+		}
+		//下キーで視野角が狭まる
+		else if (input_->PushKey(DIK_S))
+		{
+			viewProjection_.fovAngleY -= 0.01f;
+			viewProjection_.fovAngleY = max(viewProjection_.fovAngleY, 0.01f);
+		}
+
+		//行列の再計算
+		viewProjection_.UpdateMatrix();
+
+		//
+		debugText_->SetPos(50,110);
+		debugText_->Printf("forAngleY(Degree)::%f", XMConvertToDegrees(viewProjection_.fovAngleY));
+
+		//上下キーでニアクリップ距離を増減
+		if (input_->PushKey(DIK_UP)) {
+			viewProjection_.nearZ += 0.1f;
+		}
+		else if (input_->PushKey(DIK_DOWN)) {
+			viewProjection_.nearZ -= 0.1f;
+		}
+
+		//行列の再計算
+		viewProjection_.UpdateMatrix();
+
+		//
+		debugText_->SetPos(50, 130);
+		debugText_->Printf("nearZ:%f", viewProjection_.nearZ);
+
+
 	}
 	
 }
