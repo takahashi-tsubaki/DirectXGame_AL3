@@ -42,20 +42,6 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
-	//パーツID
-	enum PartId
-	{
-		Root,//大元
-		Spine,//脊髄
-		Chest,//胸
-		Head,
-		ArmL,
-		ArmR,
-		Hip,
-		LegL,
-		LegR,
-	};
-
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -70,11 +56,9 @@ class GameScene {
 
 	//ワールドトランスフォーム
 	WorldTransform worldTransform_[100];
+	WorldTransform worldTransform2_[100];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
-
-	//カメラの上方向の角度
-	float viewAngle = 0.0f;
 
 	/// <summary>
 	/// ゲームシーン用
