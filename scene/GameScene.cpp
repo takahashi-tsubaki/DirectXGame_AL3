@@ -20,36 +20,24 @@ void GameScene::Initialize() {
 	//３Dモデルの生成
 	model_ = Model::Create();
 
-	for (size_t i = 0;i< _countof(worldTransform_);i++) 
+	for (size_t i = 0; i< _countof(worldTransform_); i++) 
 	{
-		//X,Y,Z方向のスケーリングを設定
-		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
+		for (size_t j = 0; j < _countof(worldTransform_); j++) 
+		{
+			////X,Y,Z方向のスケーリングを設定
+			// worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
 
-		////X,Y,Z軸回りの回転角を設定
-		//worldTransform_[i].rotation_ = {};
+			//////X,Y,Z軸回りの回転角を設定
+			////worldTransform_[i].rotation_ = {};
 
-		//X,Y,Z軸回りの平行移動を設定
-		worldTransform_[i].translation_ = {-50.0f + (10.0f * i), 20.0f, 0.0f};
+			//X,Y,Z軸回りの平行移動を設定
+			worldTransform_[j][i].translation_ = {-16.0f + (4.0f * i), 16.0f - (4.0f *j), 0.0f};
 
-		//ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
+			//ワールドトランスフォームの初期化
+			 worldTransform_[j][i].Initialize();
+		}
+		
 	}
-
-	for (size_t i = 0; i < _countof(worldTransform2_); i++) 
-	{
-		// X,Y,Z方向のスケーリングを設定
-		worldTransform2_[i].scale_ = {5.0f, 5.0f, 5.0f};
-
-		////X,Y,Z軸回りの回転角を設定
-		// worldTransform2_[i].rotation_ = {};
-
-		// X,Y,Z軸回りの平行移動を設定
-		worldTransform2_[i].translation_ = {-50.0f + (10.0f * i), -20.0f, 0.0f};
-
-		//ワールドトランスフォームの初期化
-		worldTransform2_[i].Initialize();
-	}
-
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
@@ -58,7 +46,6 @@ void GameScene::Initialize() {
 void GameScene::Update() 
 {
 
-	
 }
 
 void GameScene::Draw() {
@@ -89,15 +76,18 @@ void GameScene::Draw() {
 	/// </summary>
 
 	// 3Dモデル描画
-	for (int i = 0;i< _countof(worldTransform_);i++) 
+
+	for (size_t i = 0; i < _countof(worldTransform_); i++) 
 	{
-		model_->Draw(worldTransform_[i], viewProjection_,textureHandle_);
+		for (size_t j = 0; j < _countof(worldTransform_); j++) 
+		{
+			if (j %2 ==0 || i%2 == 0)
+			{
+				model_->Draw(worldTransform_[j][i], viewProjection_, textureHandle_);
+			}
+		}
 	}
 	
-	for (int i = 0; i < _countof(worldTransform2_); i++)
-	{
-		model_->Draw(worldTransform2_[i], viewProjection_, textureHandle_);
-	}
 
 
 	// 3Dオブジェクト描画後処理
