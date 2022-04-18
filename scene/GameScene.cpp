@@ -24,17 +24,21 @@ void GameScene::Initialize() {
 	{
 		for (size_t j = 0; j < _countof(worldTransform_); j++) 
 		{
-			////X,Y,Z方向のスケーリングを設定
-			// worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
+			for (size_t k = 0; k < _countof(worldTransform_); k++) 
+			{
+				////X,Y,Z方向のスケーリングを設定
+				// worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
 
-			//////X,Y,Z軸回りの回転角を設定
-			////worldTransform_[i].rotation_ = {};
+				//////X,Y,Z軸回りの回転角を設定
+				////worldTransform_[i].rotation_ = {};
 
-			//X,Y,Z軸回りの平行移動を設定
-			worldTransform_[j][i].translation_ = {-16.0f + (4.0f * i), 16.0f - (4.0f *j), 0.0f};
+				// X,Y,Z軸回りの平行移動を設定
+				worldTransform_[k][j][i].translation_ = {-12.0f + (3.0f * i),12.0f -(3.0f * j), (4.0f * k)};
 
-			//ワールドトランスフォームの初期化
-			 worldTransform_[j][i].Initialize();
+				//ワールドトランスフォームの初期化
+				worldTransform_[k][j][i].Initialize();
+			}
+			
 		}
 		
 	}
@@ -78,9 +82,9 @@ void GameScene::Draw() {
 	{
 		for (size_t j = 0; j < _countof(worldTransform_); j++) 
 		{
-			if (j %2 ==0 || i%2 == 0)
+			for (size_t k = 0; k < _countof(worldTransform_); k++) 
 			{
-				model_->Draw(worldTransform_[j][i], viewProjection_, textureHandle_);
+				model_->Draw(worldTransform_[k][j][i], viewProjection_, textureHandle_);
 			}
 		}
 	}
