@@ -42,6 +42,20 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
+	//パーツID
+	enum PartId
+	{
+		Root,//大元
+		Spine,//脊髄
+		Chest,//胸
+		Head,
+		ArmL,
+		ArmR,
+		Hip,
+		LegL,
+		LegR,
+	};
+
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
