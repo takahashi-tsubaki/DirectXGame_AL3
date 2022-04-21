@@ -55,11 +55,24 @@ class GameScene {
 	Model* model_ = nullptr;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_[9][9][9];
+	WorldTransform worldTransform_;
 	
-
 	//ビュープロジェクション
-	ViewProjection viewProjection_;
+	ViewProjection viewProjection_[3];
+
+	float eyePosX[3] = {0.0f, 0.0f, 0.0f};
+	float eyePosY[3] = {0.0f, 0.0f, 0.0f};
+	float eyePosZ[3] = {0.0f, 1.0f, 0.0f};
+
+	float targetPosX[3] = {0.0f, 0.0f, 0.0f};
+	float targetPosY[3] = {0.0f, 0.0f, 0.0f};
+	float targetPosZ[3] = {0.0f, 1.0f, 0.0f};
+
+	float upPosX[3] = {0.0f, 0.0f, 0.0f};
+	float upPosY[3] = {0.0f, 0.0f, 0.0f};
+	float upPosZ[3] = {0.0f, 1.0f, 0.0f};
+
+	int cameraNum = 0;
 
 	/// <summary>
 	/// ゲームシーン用
