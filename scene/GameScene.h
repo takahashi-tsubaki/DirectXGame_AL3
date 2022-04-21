@@ -58,11 +58,8 @@ class GameScene {
 	WorldTransform worldTransform_;
 	
 	//ビュープロジェクション
-	ViewProjection viewProjection_[3];
+	ViewProjection viewProjection_;
 
-	float eyePosX[3] = {0.0f, 0.0f, 0.0f};
-	float eyePosY[3] = {0.0f, 0.0f, 0.0f};
-	float eyePosZ[3] = {0.0f, 1.0f, 0.0f};
 
 	float targetPosX[3] = {0.0f, 0.0f, 0.0f};
 	float targetPosY[3] = {0.0f, 0.0f, 0.0f};
@@ -72,7 +69,9 @@ class GameScene {
 	float upPosY[3] = {0.0f, 0.0f, 0.0f};
 	float upPosZ[3] = {0.0f, 1.0f, 0.0f};
 
-	int cameraNum = 0;
+	float angle = 0;
+
+	int flame = 0;
 
 	/// <summary>
 	/// ゲームシーン用
