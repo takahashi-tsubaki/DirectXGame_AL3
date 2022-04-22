@@ -20,8 +20,20 @@ void GameScene::Initialize() {
 	//３Dモデルの生成
 	model_ = Model::Create();
 
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+	for (int i = 0;i<_countof(worldTransform_);i++) 
+	{
+
+
+		//X、Y、Zの平行移動
+		worldTransform_[0].translation_ = {};
+		worldTransform_[1].translation_ = {5,-3,0};
+		worldTransform_[2].translation_ = {-5,-3,0};
+
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+	}
+
+	
 
 	for (int i = 0; i < _countof(viewProjection_);i++)
 	{
@@ -29,7 +41,7 @@ void GameScene::Initialize() {
 		viewProjection_[i].eye = {0, 0, -25};
 
 		//
-		viewProjection_[0].target = {0, 5, 0};
+		viewProjection_[0].target = {-0, 5, 0};
 		viewProjection_[1].target = {-4.3, -2.5, 0};
 		viewProjection_[2].target = {4.3, -2.5, 0};
 
@@ -38,7 +50,6 @@ void GameScene::Initialize() {
 
 		//ビュープロジェクションの初期化
 		viewProjection_[i].Initialize();
-
 	}
 	
 	
@@ -57,25 +68,26 @@ void GameScene::Update()
 			targetNum = 0;
 		}
 	}
-	for (int i = 0; i < _countof(viewProjection_); i++)
-	{
-		//行列の再計算
-		/*viewProjection_.UpdateMatrix();*/
+	
+	
+		
 
 		debugText_->SetPos(50, 50);
 		debugText_->Printf(
-		  "eye:(%f,%f,%f)\n", viewProjection_[i].eye.x, viewProjection_[i].eye.y,
-		  viewProjection_[i].eye.z);
+	      "eye:(%f,%f,%f)\n", viewProjection_[targetNum].eye.x, viewProjection_[targetNum].eye.y,
+	      viewProjection_[targetNum].eye.z);
 		debugText_->SetPos(50, 70);
 		debugText_->Printf(
-		  "target:(%f,%f,%f)\n", viewProjection_[i].target.x, viewProjection_[i].target.y,
-		  viewProjection_[i].target.z);
+	      "target:(%f,%f,%f)\n", viewProjection_[targetNum].target.x,
+	      viewProjection_[targetNum].target.y, viewProjection_[targetNum].target.z);
 		debugText_->SetPos(50, 90);
 		debugText_->Printf(
-		  "up:(%f,%f,%f)\n", viewProjection_[i].up.x, viewProjection_[i].up.y,
-		  viewProjection_[i].up.z);
+	      "up:(%f,%f,%f)\n", viewProjection_[targetNum].up.x, viewProjection_[targetNum].up.y,
+	      viewProjection_[targetNum].up.z);
 
-	}
+		////行列の再計算
+		//viewProjection_[i].UpdateMatrix();
+
 	
 }
 
@@ -107,7 +119,11 @@ void GameScene::Draw() {
 	/// </summary>
 
 	// 3Dモデル描画
-	model_->Draw(worldTransform_, viewProjection_[targetNum], textureHandle_);
+	for (int i = 0;i<3;i++)
+	{
+		model_->Draw(worldTransform_[i], viewProjection_[targetNum], textureHandle_);
+
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
