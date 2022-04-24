@@ -22,48 +22,52 @@ void GameScene::Initialize() {
 
 	for (int i = 0;i<_countof(worldTransform_);i++) 
 	{
+		for (int j = 0; j < _countof(worldTransform_); j++) 
+		{
 
-		//X、Y、Zの平行移動
-		worldTransform_[0].translation_ = {};
-		worldTransform_[1].translation_ = {5,-3,0};
-		worldTransform_[2].translation_ = {-5,-3,0};
+			worldTransform_[j][i].translation_ = {-12.0f + (i * 4.0f), -12.0f + (j*4.0f),0.0f};
 
-		//ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
+			//ワールドトランスフォームの初期化
+			worldTransform_[j][i].Initialize();
+		}
+		
 	}
 
-	for (int i = 0; i < _countof(viewProjection_);i++)
-	{
-		//
-		viewProjection_[i].eye = {0, 0, -25};
+	//ビュープロジェクションの初期化
+	viewProjection_.Initialize();
 
-		//
-		viewProjection_[0].target = {-0, 5, 0};
-		viewProjection_[1].target = {-4.3, -2.5, 0};
-		viewProjection_[2].target = {4.3, -2.5, 0};
-
-		//
-		viewProjection_[i].up = {0.0f, 1.0f, 0.0f};
-
-		//ビュープロジェクションの初期化
-		viewProjection_[i].Initialize();
-	}
-	
 }
 
 void GameScene::Update() 
 { 
-	if (input_->TriggerKey(DIK_SPACE)) 
-	{
-		if (targetNum<2) 
-		{
-			targetNum++;
-		} else
-		{
-			targetNum = 0;
-		}
-	}
 	
+	XMFLOAT3 move = {0, 0, 0};
+
+	const float kTargetSpeed = 0.2f;
+
+	if (input_->PushKey(DIK_W)) 
+	{
+		move = {0, kTargetSpeed, 0};
+	}
+	else if(input_->PushKey(DIK_S)) 
+	{
+		move = {0, -kTargetSpeed, 0};
+	}
+	if (input_->PushKey(DIK_D)) 
+	{
+		move = {kTargetSpeed,0, 0};
+	} 
+	else if (input_->PushKey(DIK_A)) 
+	{
+		move = {-kTargetSpeed,0, 0};
+	}
+
+	viewProjection_.target.x += move.x;
+	viewProjection_.target.y += move.y;
+	viewProjection_.target.z += move.z;
+
+	viewProjection_.UpdateMatrix();
+
 	debugText_->SetPos(50, 50);
 	debugText_->Printf(
 	    "eye:(%f,%f,%f)\n", viewProjection_[targetNum].eye.x, viewProjection_[targetNum].eye.y,
@@ -109,11 +113,15 @@ void GameScene::Draw() {
 	/// </summary>
 
 	// 3Dモデル描画
-	for (int i = 0;i<3;i++)
+	for (int i = 0; i < _countof(worldTransform_); i++) 
 	{
-		model_->Draw(worldTransform_[i], viewProjection_[targetNum], textureHandle_);
-
+		for (int j = 0; j < _countof(worldTransform_); j++) 
+		{
+			model_->Draw(worldTransform_[j][i], viewProjection_, textureHandle_);
+		}
 	}
+	
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
