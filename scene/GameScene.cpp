@@ -70,14 +70,17 @@ void GameScene::Update()
 
 	if (input_->PushKey(DIK_UP)) 
 	{
-		viewProjection_.fovAngleY += 0.01f;
-		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
-	}
-
-	else if (input_->PushKey(DIK_DOWN)) {
 		viewProjection_.fovAngleY -= 0.01f;
 		viewProjection_.fovAngleY = max(viewProjection_.fovAngleY, 0.01f);
 	}
+
+	else if (input_->PushKey(DIK_DOWN)) {
+		viewProjection_.fovAngleY += 0.01f;
+		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
+		
+	}
+	
+
 	viewProjection_.UpdateMatrix();
 
 	debugText_->SetPos(50, 50);
