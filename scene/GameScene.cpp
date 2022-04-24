@@ -95,16 +95,13 @@ void GameScene::Update()
 
 	viewProjection_.UpdateMatrix();
 
-	if (input_->TriggerKey(DIK_SPACE))
+	if (input_->PushKey(DIK_SPACE))
 	{
-		if (scope == 0)
-		{
-			scope = 1;
-		} 
-		else 
-		{
-			scope = 0;
-		}
+		scope = 1;
+	} 
+	else 
+	{
+		scope = 0;
 	}
 
 	if (scope == 1)
