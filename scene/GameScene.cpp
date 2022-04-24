@@ -70,16 +70,16 @@ void GameScene::Update()
 
 	debugText_->SetPos(50, 50);
 	debugText_->Printf(
-	    "eye:(%f,%f,%f)\n", viewProjection_[targetNum].eye.x, viewProjection_[targetNum].eye.y,
-	    viewProjection_[targetNum].eye.z);
+	    "eye:(%f,%f,%f)\n", viewProjection_.eye.x, viewProjection_.eye.y,
+	    viewProjection_.eye.z);
 	debugText_->SetPos(50, 70);
 	debugText_->Printf(
-	    "target:(%f,%f,%f)\n", viewProjection_[targetNum].target.x,
-	    viewProjection_[targetNum].target.y, viewProjection_[targetNum].target.z);
+	    "target:(%f,%f,%f)\n", viewProjection_.target.x,
+	    viewProjection_.target.y, viewProjection_.target.z);
 	debugText_->SetPos(50, 90);
 	debugText_->Printf(
-	    "up:(%f,%f,%f)\n", viewProjection_[targetNum].up.x, viewProjection_[targetNum].up.y,
-	    viewProjection_[targetNum].up.z);
+	    "up:(%f,%f,%f)\n", viewProjection_.up.x, viewProjection_.up.y,
+	    viewProjection_.up.z);
 
 		////行列の再計算
 		//viewProjection_[i].UpdateMatrix();
