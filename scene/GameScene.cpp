@@ -68,6 +68,18 @@ void GameScene::Update()
 
 	viewProjection_.UpdateMatrix();
 
+	if (input_->PushKey(DIK_UP)) 
+	{
+		viewProjection_.fovAngleY += 0.01f;
+		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
+	}
+
+	else if (input_->PushKey(DIK_DOWN)) {
+		viewProjection_.fovAngleY -= 0.01f;
+		viewProjection_.fovAngleY = max(viewProjection_.fovAngleY, 0.01f);
+	}
+	viewProjection_.UpdateMatrix();
+
 	debugText_->SetPos(50, 50);
 	debugText_->Printf(
 		"eye:(%f,%f,%f)\n", viewProjection_.eye.x, viewProjection_.eye.y,
