@@ -23,7 +23,6 @@ void GameScene::Initialize() {
 	for (int i = 0;i<_countof(worldTransform_);i++) 
 	{
 
-
 		//X、Y、Zの平行移動
 		worldTransform_[0].translation_ = {};
 		worldTransform_[1].translation_ = {5,-3,0};
@@ -32,8 +31,6 @@ void GameScene::Initialize() {
 		//ワールドトランスフォームの初期化
 		worldTransform_[i].Initialize();
 	}
-
-	
 
 	for (int i = 0; i < _countof(viewProjection_);i++)
 	{
@@ -52,14 +49,12 @@ void GameScene::Initialize() {
 		viewProjection_[i].Initialize();
 	}
 	
-	
 }
 
 void GameScene::Update() 
 { 
 	if (input_->TriggerKey(DIK_SPACE)) 
 	{
-		
 		if (targetNum<2) 
 		{
 			targetNum++;
@@ -69,26 +64,21 @@ void GameScene::Update()
 		}
 	}
 	
-	
-		
-
-		debugText_->SetPos(50, 50);
-		debugText_->Printf(
-	      "eye:(%f,%f,%f)\n", viewProjection_[targetNum].eye.x, viewProjection_[targetNum].eye.y,
-	      viewProjection_[targetNum].eye.z);
-		debugText_->SetPos(50, 70);
-		debugText_->Printf(
-	      "target:(%f,%f,%f)\n", viewProjection_[targetNum].target.x,
-	      viewProjection_[targetNum].target.y, viewProjection_[targetNum].target.z);
-		debugText_->SetPos(50, 90);
-		debugText_->Printf(
-	      "up:(%f,%f,%f)\n", viewProjection_[targetNum].up.x, viewProjection_[targetNum].up.y,
-	      viewProjection_[targetNum].up.z);
+	debugText_->SetPos(50, 50);
+	debugText_->Printf(
+	    "eye:(%f,%f,%f)\n", viewProjection_[targetNum].eye.x, viewProjection_[targetNum].eye.y,
+	    viewProjection_[targetNum].eye.z);
+	debugText_->SetPos(50, 70);
+	debugText_->Printf(
+	    "target:(%f,%f,%f)\n", viewProjection_[targetNum].target.x,
+	    viewProjection_[targetNum].target.y, viewProjection_[targetNum].target.z);
+	debugText_->SetPos(50, 90);
+	debugText_->Printf(
+	    "up:(%f,%f,%f)\n", viewProjection_[targetNum].up.x, viewProjection_[targetNum].up.y,
+	    viewProjection_[targetNum].up.z);
 
 		////行列の再計算
 		//viewProjection_[i].UpdateMatrix();
-
-	
 }
 
 void GameScene::Draw() {
