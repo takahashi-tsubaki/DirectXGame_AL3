@@ -21,35 +21,51 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 
 
+	for (int i = 0;i<_countof(worldTransform_);i++) 
+	{
+		for (int j = 0; j < _countof(worldTransform_); j++) 
+		{
 
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+			worldTransform_[j][i].translation_ = {-12.0f + (i * 4.0f), -12.0f + (j*4.0f),0.0f};
 
-	//
-	viewProjection_.eye = {0,0,-10};
+			//ワールドトランスフォームの初期化
+			worldTransform_[j][i].Initialize();
+		}
 		
-	//
-	viewProjection_.target = {0,0,0};
-
-	// 
-	viewProjection_.up = {0.0f,1.0f, 0.0f};
+	}
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
-
-	
 }
 
 void GameScene::Update() 
 { 
-	viewProjection_.eye.x = sin(angle) * 10;
-	viewProjection_.eye.z = cos(angle) * 10;
-	flame++;
-	if (flame %5 ==0) {
-		angle += 0.1;
-		flame = 0;
-	}
 	
+	XMFLOAT3 move = {0, 0, 0};
+
+	const float kTargetSpeed = 0.2f;
+
+	if (input_->PushKey(DIK_W)) 
+	{
+		move = {0, kTargetSpeed, 0};
+	}
+	else if(input_->PushKey(DIK_S)) 
+	{
+		move = {0, -kTargetSpeed, 0};
+	}
+	if (input_->PushKey(DIK_D)) 
+	{
+		move = {kTargetSpeed,0, 0};
+	} 
+	else if (input_->PushKey(DIK_A)) 
+	{
+		move = {-kTargetSpeed,0, 0};
+	}
+
+	viewProjection_.target.x += move.x;
+	viewProjection_.target.y += move.y;
+	viewProjection_.target.z += move.z;
+
 	viewProjection_.UpdateMatrix();
 
 	debugText_->SetPos(50, 50);
@@ -95,7 +111,14 @@ void GameScene::Draw() {
 	/// </summary>
 
 	// 3Dモデル描画
-	model_->Draw(worldTransform_,viewProjection_,textureHandle_);
+	for (int i = 0; i < _countof(worldTransform_); i++) 
+	{
+		for (int j = 0; j < _countof(worldTransform_); j++) 
+		{
+			model_->Draw(worldTransform_[j][i], viewProjection_, textureHandle_);
+		}
+	}
+	
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
