@@ -18,8 +18,11 @@ void GameScene::Initialize() {
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
 	reticleHandle_ = TextureManager::Load("reticle.png");
+	scopeHandle_ = TextureManager::Load("scope.png");
 
+	//
 	sprite_ = Sprite::Create(reticleHandle_, {576, 296});
+	sprite2_ = Sprite::Create(scopeHandle_, {0, 0});
 	//３Dモデルの生成
 	model_ = Model::Create();
 
@@ -53,9 +56,9 @@ void GameScene::Initialize() {
 		
 	}
 
-	viewProjection_.eye = {0,0,-30};
+	viewProjection_.eye = {0,0,-50};
 
-	viewProjection_.fovAngleY = XMConvertToRadians(10.0f);
+	viewProjection_.fovAngleY = XMConvertToRadians(90.0f);
 
 	//ニアクリップ距離
 	viewProjection_.nearZ = 0.1f;
@@ -95,22 +98,28 @@ void GameScene::Update()
 
 	viewProjection_.UpdateMatrix();
 
-	if (input_->PushKey(DIK_SPACE))
+	if (input_->TriggerKey(DIK_SPACE))
 	{
-		scope = 1;
+		if (scope == 0)
+		{
+			scope = 1;
+		} 
+		else 
+		{
+			scope = 0;
+		}
+		
 	} 
-	else 
-	{
-		scope = 0;
-	}
+		
+	
 
 	if (scope == 1)
 	{
-		viewProjection_.fovAngleY = 19.999998f;
+		viewProjection_.fovAngleY = 33.349995f;
 	}
 	else
 	{
-		viewProjection_.fovAngleY = 39.999996f;
+		viewProjection_.fovAngleY = 90.0f;
 	}
 
 	viewProjection_.UpdateMatrix();
@@ -189,6 +198,7 @@ void GameScene::Draw() {
 	if (scope == 1) 
 	{
 		sprite_->Draw();
+		sprite2_->Draw();
 	}
 
 	// デバッグテキストの描画

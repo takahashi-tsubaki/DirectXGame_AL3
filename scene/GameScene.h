@@ -51,10 +51,11 @@ class GameScene {
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	uint32_t reticleHandle_ = 0;
+	uint32_t scopeHandle_ = 0;
 
 	//
 	Sprite* sprite_ = nullptr;
-
+	Sprite* sprite2_ = nullptr;
 	//モデルの表示
 	Model* model_ = nullptr;
 
