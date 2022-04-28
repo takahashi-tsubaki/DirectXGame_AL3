@@ -47,7 +47,7 @@ class GameScene {
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
-
+	Model* model_ = nullptr;
 
 	/// <summary>
 	/// ゲームシーン用

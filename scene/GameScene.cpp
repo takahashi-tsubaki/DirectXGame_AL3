@@ -16,9 +16,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	//ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("mario.jpg");
-	reticleHandle_ = TextureManager::Load("reticle.png");
-
+	
 }
 
 void GameScene::Update() 
@@ -66,11 +64,6 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
-	if (scope == 1) 
-	{
-		sprite_->Draw();
-	}
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
